@@ -44,7 +44,7 @@ public:
 	stats(PNG & im); 
 
 	// given a rectangle, compute its sum of squared deviations from 
-        // mean, over all color channels. Will be used to make split when
+    // mean, over all color channels. Will be used to make split when
 	// building tree.
 	/* @param ul is (x,y) of the upper left corner of the rectangle 
 	* @param lr is (x,y) of the lower right corner of the rectangle */
