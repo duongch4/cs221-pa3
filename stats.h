@@ -66,7 +66,17 @@ private:
 	 * SAT(i,j) = Original(i,j) + SAT(i-1,j) + SAT(i,j-1) - SAT(i-1,j-1)*/
 	void updateSixVectorsMainCase(unsigned i, unsigned j, RGBAPixel*& pixel);
 	
+	/**
+	 * Get the upperLeft, lowerLeft, and upperRight components of a SAT
+	 * Used in getSum and getSumSq */
+	long upperLeftComponent(vector< vector<long> >& vec, pair<int,int> ul);
+	long lowerLeftComponent(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr);
+	long upperRightComponent(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr);
 
+	/**
+	 * getSum helper */ 
+	long getSum(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr);
+	
 public:
 
 	// initialize the private vectors so that, for each color,  entry 

@@ -13,7 +13,9 @@ using std::endl;
 * @param ul is (x,y) of the upper left corner of the rectangle 
 * @param lr is (x,y) of the lower right corner of the rectangle */
 long stats::getSum(char channel, pair<int,int> ul, pair<int,int> lr) {
-    return 0.0; 
+    if (channel == 'r') return getSum(sumRed, ul, lr);
+    else if (channel == 'g') return getSum(sumGreen, ul, lr);
+    else if (channel == 'b') return getSum(sumBlue, ul, lr);
 }
 
 /* returns the sums of squares of all pixel values across a given color channel.
@@ -81,6 +83,26 @@ stats::stats(PNG & im) {
     cout << "first 5x5 sumsqRed:" << endl;
     printStats(sumsqRed);
     
+    cout << "\n";
+    pair<int,int> ul (0,0);
+    pair<int,int> lr (4,3);
+    cout << "getSum on Red Channel: " << getSum('r', ul, lr) << endl;
+
+    cout << "\n";
+    ul.first = 0;
+    ul.second = 2;
+    cout << "getSum on Red Channel: " << getSum('r', ul, lr) << endl;
+    
+    cout << "\n";
+    ul.first = 3;
+    ul.second = 0;
+    cout << "getSum on Red Channel: " << getSum('r', ul, lr) << endl;
+    
+    cout << "\n";
+    ul.first = 1;
+    ul.second = 3;
+    cout << "getSum on Red Channel: " << getSum('r', ul, lr) << endl;
+    
 }
 
 // given a rectangle, compute its sum of squared deviations from 
@@ -110,6 +132,12 @@ long stats::rectArea(pair<int,int> ul, pair<int,int> lr) {
 }
 
 
+
+/**
+ * Private Helpers*/
+
+/**
+ * Print any 2D-vectors */
 template <class T>
 void stats::printStats(vector< vector<T> >& vec) {
     for (int i = 0; i < 5; i++) {
@@ -120,6 +148,9 @@ void stats::printStats(vector< vector<T> >& vec) {
     }
 }
 
+/**
+ * Resize vectors since we know their sizes beforehand
+ * Used in stats(PNG& im) */
 void stats::resizeSixVectors_NumberOfRowsToImgHeight(PNG& im) {
     sumRed.resize(im.height());
     sumGreen.resize(im.height());
@@ -138,6 +169,9 @@ void stats::resizeSixVectors_NumberOfColsToImgWidth(PNG& im, int row) {
     sumsqBlue[row].resize(im.width());
 }
 
+/**
+ * Update and reset accumulators methods
+ * Used in stats(PNG& im) */
 void stats::updateAcc(RGBAPixel*& pixel, long& accR, long& accG, long& accB, long& accSqR, long& accSqG, long& accSqB) {
     accR += pixel->r;
     accG += pixel->g;
@@ -145,15 +179,6 @@ void stats::updateAcc(RGBAPixel*& pixel, long& accR, long& accG, long& accB, lon
     accSqR += (pixel->r) * (pixel->r);
     accSqG += (pixel->g) * (pixel->g);
     accSqB += (pixel->b) * (pixel->b);
-}
-
-void stats::updateSixVectorsBaseCase(unsigned i, unsigned j, long& accR, long& accG, long& accB, long& accSqR, long& accSqG, long& accSqB) {
-    sumRed[i][j] = accR;
-    sumGreen[i][j] = accG;
-    sumBlue[i][j] = accB;
-    sumsqRed[i][j] = accSqR;
-    sumsqGreen[i][j] = accSqG;
-    sumsqBlue[i][j] = accSqB;
 }
 
 void stats::resetAcc(long& accR, long& accG, long& accB, long& accSqR, long& accSqG, long& accSqB) {
@@ -165,6 +190,23 @@ void stats::resetAcc(long& accR, long& accG, long& accB, long& accSqR, long& acc
     accSqB = 0;
 }
 
+
+/**
+ * Update base case for the private vectors
+ * Used in stats(PNG& im) */
+void stats::updateSixVectorsBaseCase(unsigned i, unsigned j, long& accR, long& accG, long& accB, long& accSqR, long& accSqG, long& accSqB) {
+    sumRed[i][j] = accR;
+    sumGreen[i][j] = accG;
+    sumBlue[i][j] = accB;
+    sumsqRed[i][j] = accSqR;
+    sumsqGreen[i][j] = accSqG;
+    sumsqBlue[i][j] = accSqB;
+}
+
+/**
+ * Update main case for the private vectors (which are Summed-Area-Table or SAT)
+ * Used in stats(PNG& im) 
+ * SAT(i,j) = Original(i,j) + SAT(i-1,j) + SAT(i,j-1) - SAT(i-1,j-1)*/
 void stats::updateSixVectorsMainCase(unsigned i, unsigned j, RGBAPixel*& pixel) {
     sumRed[i][j] = pixel->r + sumRed[i-1][j] + sumRed[i][j-1] - sumRed[i-1][j-1];
     sumGreen[i][j] = pixel->g + sumGreen[i-1][j] + sumGreen[i][j-1] - sumGreen[i-1][j-1];
@@ -172,4 +214,30 @@ void stats::updateSixVectorsMainCase(unsigned i, unsigned j, RGBAPixel*& pixel) 
     sumsqRed[i][j] = (pixel->r)*(pixel->r) + sumsqRed[i-1][j] + sumsqRed[i][j-1] - sumsqRed[i-1][j-1];
     sumsqGreen[i][j] = (pixel->g)*(pixel->g) + sumsqGreen[i-1][j] + sumsqGreen[i][j-1] - sumsqGreen[i-1][j-1];
     sumsqBlue[i][j] = (pixel->b)*(pixel->b) + sumsqBlue[i-1][j] + sumsqBlue[i][j-1] - sumsqBlue[i-1][j-1];
+}
+
+
+/**
+ * Get the upperLeft, lowerLeft, and upperRight components of a SAT
+ * Used in getSum and getSumSq */
+long stats::upperLeftComponent(vector< vector<long> >& vec, pair<int,int> ul) {
+    return vec[ ul.second - 1 ][ ul.first - 1 ];
+}
+
+long stats::lowerLeftComponent(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr) {
+    return vec[ lr.second ][ ul.first - 1 ];
+}
+
+long stats::upperRightComponent(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr) {
+    return vec[ ul.second - 1 ][ lr.first ];
+}
+
+/**
+ * getSum helper */ 
+long stats::getSum(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr) {
+    long lowerRightComponent = vec[ lr.second ][ lr.first ];
+    if (ul.first == 0 && ul.second == 0) return lowerRightComponent;
+    else if (ul.first == 0 && ul.second != 0) return lowerRightComponent - upperRightComponent(vec, ul, lr);
+    else if (ul.first != 0 && ul.second == 0) return lowerRightComponent - lowerLeftComponent(vec, ul, lr);
+    else return lowerRightComponent + upperLeftComponent(vec, ul) - lowerLeftComponent(vec, ul, lr) - upperRightComponent(vec, ul, lr);
 }
