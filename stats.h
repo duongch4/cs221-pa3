@@ -35,6 +35,38 @@ private:
 	* @param lr is (x,y) of the lower right corner of the rectangle */
 	long getSumSq(char channel, pair<int,int> ul, pair<int,int> lr);
 
+	/**
+	 * Private Helpers*/
+	
+	/**
+	 * Print any 2D-vectors */
+	template<class T>
+	void printStats(vector< vector<T> >& vec);
+
+	/**
+	 * Resize vectors since we know their sizes beforehand
+	 * Used in stats(PNG& im) */
+	void resizeSixVectors_NumberOfRowsToImgHeight(PNG& im);
+	void resizeSixVectors_NumberOfColsToImgWidth(PNG& im, int row);
+
+	/**
+	 * Update and reset accumulators methods
+	 * Used in stats(PNG& im) */
+	void updateAcc(RGBAPixel*& pixel, long& accR, long& accG, long& accB, long& accSqR, long& accSqG, long& accSqB);
+	void resetAcc(long& accR, long& accG, long& accB, long& accSqR, long& accSqG, long& accSqB);
+
+	/**
+	 * Update base case for the private vectors
+	 * Used in stats(PNG& im) */
+	void updateSixVectorsBaseCase(unsigned row, unsigned col, long& accR, long& accG, long& accB, long& accSqR, long& accSqG, long& accSqB);
+
+	/**
+	 * Update main case for the private vectors (which are Summed-Area-Table or SAT)
+	 * Used in stats(PNG& im) 
+	 * SAT(i,j) = Original(i,j) + SAT(i-1,j) + SAT(i,j-1) - SAT(i-1,j-1)*/
+	void updateSixVectorsMainCase(unsigned i, unsigned j, RGBAPixel*& pixel);
+	
+
 public:
 
 	// initialize the private vectors so that, for each color,  entry 
