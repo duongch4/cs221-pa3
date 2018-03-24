@@ -25,7 +25,9 @@ long stats::getSum(char channel, pair<int,int> ul, pair<int,int> lr) {
 * @param ul is (x,y) of the upper left corner of the rectangle 
 * @param lr is (x,y) of the lower right corner of the rectangle */
 long stats::getSumSq(char channel, pair<int,int> ul, pair<int,int> lr) {
-    return 0.0;
+    if (channel == 'r') return getSum(sumsqRed, ul, lr);
+    else if (channel == 'g') return getSum(sumsqGreen, ul, lr);
+    else if (channel == 'b') return getSum(sumsqBlue, ul, lr);
 }
 
 // initialize the private vectors so that, for each color,  entry 
@@ -86,22 +88,22 @@ stats::stats(PNG & im) {
     cout << "\n";
     pair<int,int> ul (0,0);
     pair<int,int> lr (4,3);
-    cout << "getSum on Red Channel: " << getSum('r', ul, lr) << endl;
+    cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
 
     cout << "\n";
     ul.first = 0;
     ul.second = 2;
-    cout << "getSum on Red Channel: " << getSum('r', ul, lr) << endl;
+    cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
     
     cout << "\n";
     ul.first = 3;
     ul.second = 0;
-    cout << "getSum on Red Channel: " << getSum('r', ul, lr) << endl;
+    cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
     
     cout << "\n";
     ul.first = 1;
     ul.second = 3;
-    cout << "getSum on Red Channel: " << getSum('r', ul, lr) << endl;
+    cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
     
 }
 
@@ -233,7 +235,7 @@ long stats::upperRightComponent(vector< vector<long> >& vec, pair<int,int> ul, p
 }
 
 /**
- * getSum helper */ 
+ * getSum and getSumSq helper */ 
 long stats::getSum(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr) {
     long lowerRightComponent = vec[ lr.second ][ lr.first ];
     if (ul.first == 0 && ul.second == 0) return lowerRightComponent;
