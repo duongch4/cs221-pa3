@@ -78,7 +78,7 @@ private:
 	long getSum(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr);
 	
 	/**
-	 * getScore helper */ 
+	 * getScore helper: score for individual channel */
 	long getScore(char channel, pair<int,int> ul, pair<int,int> lr);
 
 public:

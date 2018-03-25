@@ -172,6 +172,15 @@ private:
    */
    Node * buildTree(stats & s,pair<int,int> ul, pair<int,int> lr);
 
+    /**
+     * Helper for clear() */
+    void clear(Node* node);
+
+    /**
+     * Helper for copy(const twoDtree & other) */
+    Node* copy(const Node* otherNode);
+
+
    /* =================== end of private PA3 functions ============== */
 };
 

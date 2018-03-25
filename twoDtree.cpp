@@ -50,12 +50,45 @@ void twoDtree::prune(double pct, int tol){
 
 void twoDtree::clear() {
 	/* your code here */
+	clear(root);
+	root = NULL;
+	height = 0;
+	width = 0;
 }
 
 
-void twoDtree::copy(const twoDtree & orig){
+void twoDtree::copy(const twoDtree & other){
 	/* your code here */
+	root = copy(other.root);
+	height = other.height;
+	width = other.width;
 }
 
 
 
+/**
+ ******************* Helpers ****************/
+
+/**
+ * Helper for clear() */
+void twoDtree::clear(Node* node) {
+	if (node == NULL) return;
+	else {
+		clear(node->left);
+		clear(node->right);
+		delete node;
+	}
+}
+
+/**
+ * Helper for copy(const twoDtree & other) */
+twoDtree::Node* twoDtree::copy(const Node* otherNode) {
+	if (otherNode == NULL) return NULL;
+	else {
+		Node* newNode = new Node(otherNode->upLeft, otherNode->lowRight, otherNode->avg);
+		newNode->left = copy(otherNode->left);
+		newNode->right = copy(otherNode->right);
+		
+		return newNode;
+	}
+}
