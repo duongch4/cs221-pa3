@@ -104,7 +104,17 @@ stats::stats(PNG & im) {
     ul.first = 1;
     ul.second = 3;
     cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
-    
+
+    cout << "\n";
+    cout << getSumSq('r', ul, lr) << ":" << getSumSq('g', ul, lr) << ":" << getSumSq('b', ul, lr) << endl;
+    cout << getSum('r', ul, lr) << ":" << getSum('g', ul, lr) << ":" << getSum('b', ul, lr) << endl;
+    cout << rectArea(ul, lr) << endl;
+    cout << getScore('r', ul, lr) << ":" << getScore('r', ul, lr) << ":" << getScore('r', ul, lr) << endl;
+    cout << getScore(ul, lr) << endl;
+
+    cout << "\n";
+    RGBAPixel avgPixel = getAvg(ul, lr);
+    cout << (int)avgPixel.r << ":" << (int)avgPixel.g << ":" << (int)avgPixel.b << endl;
 }
 
 // given a rectangle, compute its sum of squared deviations from 
@@ -113,7 +123,7 @@ stats::stats(PNG & im) {
 /* @param ul is (x,y) of the upper left corner of the rectangle 
 * @param lr is (x,y) of the lower right corner of the rectangle */
 long stats::getScore(pair<int,int> ul, pair<int,int> lr) {
-    return 0.0;
+    return ( getScore('r', ul, lr) + getScore('g', ul, lr) + getScore('b', ul, lr) );
 }
 
 // given a rectangle, return the average color value over the 
@@ -123,14 +133,22 @@ long stats::getScore(pair<int,int> ul, pair<int,int> lr) {
 * @param ul is (x,y) of the upper left corner of the rectangle 
 * @param lr is (x,y) of the lower right corner of the rectangle */
 RGBAPixel stats::getAvg(pair<int,int> ul, pair<int,int> lr) {
-    return RGBAPixel(2,2,2);
+    long avgRed = getSum('r', ul, lr) / rectArea(ul, lr);
+    long avgGreen = getSum('g', ul, lr) / rectArea(ul, lr);
+    long avgBlue = getSum('b', ul, lr) / rectArea(ul, lr);
+    return RGBAPixel(avgRed, avgGreen, avgBlue);
 }
 
 // given a rectangle, return the number of pixels in the rectangle
 /* @param ul is (x,y) of the upper left corner of the rectangle 
 * @param lr is (x,y) of the lower right corner of the rectangle */
 long stats::rectArea(pair<int,int> ul, pair<int,int> lr) {
-    return 0.0;
+    long width = lr.first - ul.first + 1;
+    long height = lr.second - ul.second + 1;
+    if (width == 0 && height == 0) return 1;
+    else if (width == 0) return height; 
+    else if (height == 0) return width;
+    else return width * height;
 }
 
 
@@ -242,4 +260,13 @@ long stats::getSum(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> 
     else if (ul.first == 0 && ul.second != 0) return lowerRightComponent - upperRightComponent(vec, ul, lr);
     else if (ul.first != 0 && ul.second == 0) return lowerRightComponent - lowerLeftComponent(vec, ul, lr);
     else return lowerRightComponent + upperLeftComponent(vec, ul) - lowerLeftComponent(vec, ul, lr) - upperRightComponent(vec, ul, lr);
+}
+
+/**
+ * getScore for individual channel */
+long stats::getScore(char channel, pair<int,int> ul, pair<int,int> lr) {
+    long sumSq = getSumSq(channel, ul, lr);
+    long sum = getSum(channel, ul, lr);
+    long area = rectArea(ul, lr);
+    return ( sumSq - (sum*sum / area) );
 }

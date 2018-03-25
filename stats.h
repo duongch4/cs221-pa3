@@ -77,6 +77,10 @@ private:
 	 * getSum helper */ 
 	long getSum(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr);
 	
+	/**
+	 * getScore helper */ 
+	long getScore(char channel, pair<int,int> ul, pair<int,int> lr);
+
 public:
 
 	// initialize the private vectors so that, for each color,  entry 
