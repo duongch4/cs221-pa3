@@ -19,9 +19,9 @@ int main()
 
 	// read in image
 	PNG origIm1;
-	//origIm1.readFromFile("images/stanley-totem-poles.png");
+	origIm1.readFromFile("images/stanley-totem-poles.png");
 	//origIm1.readFromFile("images/half.png");
-	origIm1.readFromFile("images/rosa.png");
+	//origIm1.readFromFile("images/rosa.png");
 	PNG origIm2;
 	origIm2.readFromFile("images/ubc-totem-poles.png");
 	PNG origIm3;
@@ -41,15 +41,13 @@ int main()
 
 	// // prune the twoDtree
 	// //where at least 100*X% of pixels are within Y of mean
-	t1.prune(0.95, 10000); 
-	// tCopy1.prune(0.95, 10000); 
+	tCopy1.prune(0.95, 10000); 
 	// tCopy2.prune(0.95, 10000); 
 	// tCopy3.prune(0.95, 3000); 
 	// tCopy4.prune(0.95, 3000); 
 	
 	// // render the twoDtree
-	PNG ppic1 = t1.render();
-	// PNG ppic1 = tCopy1.render();
+	PNG ppic1 = tCopy1.render();
 	// PNG ppic2 = tCopy2.render();
 	// PNG ppic3 = tCopy3.render();
 	// PNG ppic4 = tCopy4.render();

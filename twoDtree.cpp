@@ -124,6 +124,8 @@ void twoDtree::pruneANode(Node *node, double pct, int tol)
 	int totalChildNode = whyShouldBePruned.second;
 	if (totalBelowTolerance * 100 / totalChildNode >= pct * 100)
 	{
+		clear(node->left);
+		clear(node->right);
 		node->left = NULL;
 		node->right = NULL;
 	}
@@ -195,6 +197,7 @@ pair<int, long> twoDtree::rowWiseSplit(stats &s, pair<int, int> ul, pair<int, in
 {
 
 	if (ul.second == lr.second) return make_pair(0, 0);
+
 	int minRowWise = ul.second;
 	int minRowWiseScore = s.getScore(ul, make_pair(lr.first, ul.second)) 
 							+ s.getScore(make_pair(ul.first, ul.second + 1), lr);
@@ -212,7 +215,7 @@ pair<int, long> twoDtree::rowWiseSplit(stats &s, pair<int, int> ul, pair<int, in
 	}
 
 	//cout << "a" << minRowWiseScore << endl;
-	return make_pair(minRowWise, minRowWiseScore);
+	return pair<int,long>(minRowWise, minRowWiseScore);
 }
 
 /**
@@ -241,7 +244,7 @@ pair<int, long> twoDtree::colWiseSplit(stats &s, pair<int, int> ul, pair<int, in
 
 	//cout << "k:" << minColWise << endl;
 
-	return make_pair(minColWise, minColWiseScore);
+	return pair<int,long>(minColWise, minColWiseScore);
 }
 
 /**
@@ -298,7 +301,7 @@ void twoDtree::splitTree(stats &s, pair<int, int> ul, pair<int, int> lr,
 
 /** 
  * helper for render() */
-void twoDtree::render(PNG &png, Node *node)
+void twoDtree::render(PNG & png, Node* node)
 {
 	if (node->left == NULL && node->right == NULL)
 	{

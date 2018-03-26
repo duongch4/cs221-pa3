@@ -145,7 +145,6 @@ private:
 
    int height; // height of PNG represented by the tree
    int width; // width of PNG represented by the tree
-   vector<vector <int> > count;
 
    /* =================== private PA3 functions ============== */
 
