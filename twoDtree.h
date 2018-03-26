@@ -204,7 +204,7 @@ private:
      * render() helper*/
     void render(PNG& png, Node* node);
 
-    pair<int, int> shouldBePruned(Node* baseNode, Node* node, double pct, int tol);
+    pair<int, int> shouldBePruned(Node* baseNode, Node* node, int tol);
     void pruneANode(Node* node, double pct, int tol);
    /* =================== end of private PA3 functions ============== */
 
