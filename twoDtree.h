@@ -145,6 +145,7 @@ private:
 
    int height; // height of PNG represented by the tree
    int width; // width of PNG represented by the tree
+   vector<vector <int> > count;
 
    /* =================== private PA3 functions ============== */
 
@@ -172,6 +173,8 @@ private:
    */
    Node * buildTree(stats & s,pair<int,int> ul, pair<int,int> lr);
 
+   /************************ Helpers *******************************/
+
     /**
      * Helper for clear() */
     void clear(Node* node);
@@ -180,8 +183,32 @@ private:
      * Helper for copy(const twoDtree & other) */
     Node* copy(const Node* otherNode);
 
+    /**
+     * return the min index of a vector, from a given start index */
+    int findMinInd(vector<long>& vec, int start);
 
+    /**
+     * Row-wise split R into R1 and R2  */
+    pair<int,long> rowWiseSplit(stats& s, pair<int,int> ul, pair<int,int> lr);
+    
+    /**
+     * Col-wise split R into R1 and R2 */
+    pair<int,long> colWiseSplit(stats& s, pair<int,int> ul, pair<int,int> lr);
+
+    /**
+     * split tree and update the 2 new points: Lower Right of R1, and Upper Left of R2 */
+    void splitTree(stats& s, pair<int,int> ul, pair<int,int> lr,
+                   pair<int,int>& newLowerRight_R1, pair<int,int>& newUpperLeft_R2);
+
+    /**
+     * render() helper*/
+    void render(PNG& png, Node* node);
+
+    pair<int, int> shouldBePruned(Node* baseNode, Node* node, double pct, int tol);
+    void pruneANode(Node* node, double pct, int tol);
    /* =================== end of private PA3 functions ============== */
+
+   
 };
 
 #endif

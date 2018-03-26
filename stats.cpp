@@ -36,16 +36,6 @@ long stats::getSumSq(char channel, pair<int,int> ul, pair<int,int> lr) {
 // sum of squares from (0,0) to (x,y).
 stats::stats(PNG & im) {
 
-    cout << "Original Red" << endl;
-    for (unsigned i = 0; i < 5; i++) {
-        for (unsigned j = 0; j < 5; j++) {
-            //cout << "Element ( " << i << " , " << j << " ) = " << im.getPixel(i,j)->r;
-            cout << (int) im.getPixel(j,i)->r << " ";
-            //printf("%d", )
-        }
-        cout << endl;
-    }
-
     long accR = 0;
     long accG = 0;
     long accB = 0;
@@ -77,44 +67,44 @@ stats::stats(PNG & im) {
         }
     }
 
-    cout << "\n";
-    cout << "first 5x5 sumRed:" << endl;
-    printStats(sumRed);
+    // cout << "\n";
+    // cout << "first 5x5 sumRed:" << endl;
+    // printStats(sumRed);
 
-    cout << "\n";
-    cout << "first 5x5 sumsqRed:" << endl;
-    printStats(sumsqRed);
+    // cout << "\n";
+    // cout << "first 5x5 sumsqRed:" << endl;
+    // printStats(sumsqRed);
     
     cout << "\n";
     pair<int,int> ul (0,0);
-    pair<int,int> lr (4,3);
-    cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
+    pair<int,int> lr (0,0);
+    //cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
 
-    cout << "\n";
-    ul.first = 0;
-    ul.second = 2;
-    cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
+    // cout << "\n";
+    // ul.first = 0;
+    // ul.second = 2;
+    // cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
     
-    cout << "\n";
-    ul.first = 3;
-    ul.second = 0;
-    cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
+    // cout << "\n";
+    // ul.first = 3;
+    // ul.second = 0;
+    // cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
     
-    cout << "\n";
-    ul.first = 1;
-    ul.second = 3;
-    cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
+    // cout << "\n";
+    // ul.first = 1;
+    // ul.second = 3;
+    // cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
 
     cout << "\n";
     cout << getSumSq('r', ul, lr) << ":" << getSumSq('g', ul, lr) << ":" << getSumSq('b', ul, lr) << endl;
     cout << getSum('r', ul, lr) << ":" << getSum('g', ul, lr) << ":" << getSum('b', ul, lr) << endl;
     cout << rectArea(ul, lr) << endl;
-    cout << getScore('r', ul, lr) << ":" << getScore('r', ul, lr) << ":" << getScore('r', ul, lr) << endl;
+    cout << getScore('r', ul, lr) << ":" << getScore('g', ul, lr) << ":" << getScore('b', ul, lr) << endl;
     cout << getScore(ul, lr) << endl;
 
-    cout << "\n";
-    RGBAPixel avgPixel = getAvg(ul, lr);
-    cout << (int)avgPixel.r << ":" << (int)avgPixel.g << ":" << (int)avgPixel.b << endl;
+    // cout << "\n";
+    // RGBAPixel avgPixel = getAvg(ul, lr);
+    // cout << (int)avgPixel.r << ":" << (int)avgPixel.g << ":" << (int)avgPixel.b << endl;
 }
 
 // given a rectangle, compute its sum of squared deviations from 
@@ -160,8 +150,8 @@ long stats::rectArea(pair<int,int> ul, pair<int,int> lr) {
  * Print any 2D-vectors */
 template <class T>
 void stats::printStats(vector< vector<T> >& vec) {
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
+    for (int i = 0; i < 250; i++) {
+        for (int j = 0; j < 462; j++) {
             cout << vec[i][j] << " ";
         }
         cout << endl;
