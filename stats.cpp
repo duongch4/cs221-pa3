@@ -40,44 +40,6 @@ stats::stats(PNG & im) {
     initChannel(im, 'g', sumGreen, sumsqGreen);
     initChannel(im, 'b', sumBlue, sumsqBlue);
 
-    // cout << "\n";
-    // cout << "first 5x5 sumRed:" << endl;
-    // printStats(sumRed);
-
-    // cout << "\n";
-    // cout << "first 5x5 sumsqRed:" << endl;
-    // printStats(sumsqRed);
-    
-    cout << "\n";
-    pair<int,int> ul (0,0);
-    pair<int,int> lr (10,10);
-    //cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
-
-    // cout << "\n";
-    // ul.first = 0;
-    // ul.second = 2;
-    // cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
-    
-    // cout << "\n";
-    // ul.first = 3;
-    // ul.second = 0;
-    // cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
-    
-    // cout << "\n";
-    // ul.first = 1;
-    // ul.second = 3;
-    // cout << "getSum on Red Channel: " << getSumSq('r', ul, lr) << endl;
-
-    cout << "\n";
-    cout << getSumSq('r', ul, lr) << ":" << getSumSq('g', ul, lr) << ":" << getSumSq('b', ul, lr) << endl;
-    cout << getSum('r', ul, lr) << ":" << getSum('g', ul, lr) << ":" << getSum('b', ul, lr) << endl;
-    cout << rectArea(ul, lr) << endl;
-    cout << getScore('r', ul, lr) << ":" << getScore('g', ul, lr) << ":" << getScore('b', ul, lr) << endl;
-    cout << getScore(ul, lr) << endl;
-
-    cout << "\n";
-    RGBAPixel avgPixel = getAvg(ul, lr);
-    cout << (int)avgPixel.r << ":" << (int)avgPixel.g << ":" << (int)avgPixel.b << endl;
 }
 
 void stats::initChannel(PNG & im, char channel, vector< vector<long> >& vec, vector< vector<long> >& vecSq) {
@@ -158,28 +120,13 @@ RGBAPixel stats::getAvg(pair<int,int> ul, pair<int,int> lr) {
 long stats::rectArea(pair<int,int> ul, pair<int,int> lr) {
     long width = lr.first - ul.first + 1;
     long height = lr.second - ul.second + 1;
-    if (width == 0 && height == 0) return 1;
-    else if (width == 0) return height; 
-    else if (height == 0) return width;
-    else return width * height;
+
+    return width * height;
 }
 
 
 /**
  * Private Helpers*/
-
-/**
- * Print any 2D-vectors */
-template <class T>
-void stats::printStats(vector< vector<T> >& vec) {
-    for (int i = 0; i < 250; i++) {
-        for (int j = 0; j < 462; j++) {
-            cout << vec[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
-
 
 /**
  * Get the upperLeft, lowerLeft, and upperRight components of a SAT

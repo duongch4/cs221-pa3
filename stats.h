@@ -38,11 +38,6 @@ private:
 	 * Private Helpers*/
 	
 	/**
-	 * Print any 2D-vectors */
-	template<class T>
-	void printStats(vector< vector<T> >& vec);
-	
-	/**
 	 * Get the upperLeft, lowerLeft, and upperRight components of a SAT
 	 * Used in getSum and getSumSq */
 	long upperLeftComponent(vector< vector<long> >& vec, pair<int,int> ul);
@@ -57,8 +52,12 @@ private:
 	 * getScore helper: score for individual channel */
 	long getScore(char channel, pair<int,int> ul, pair<int,int> lr);
 
+	/**
+	 * Initialise the 'sum' and 'sumsq' vectors for one channel */
 	void initChannel(PNG & im, char channel, vector< vector<long> >& vec, vector< vector<long> >& vecSq);
 	
+	/**
+	 * Get the value for a channel from a pixel */
 	long chooseChannel(char channel, RGBAPixel*& pixel);
 
 public:

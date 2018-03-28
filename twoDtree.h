@@ -183,31 +183,31 @@ private:
     Node* copy(const Node* otherNode);
 
     /**
-     * return the min index of a vector, from a given start index */
-    int findMinInd(vector<long>& vec, int start);
-
-    /**
-     * Row-wise split R into R1 and R2  */
+     * Row-wise split R into R1 and R2
+     * Helper for buildTree() */
     pair<int,long> rowWiseSplit(stats& s, pair<int,int> ul, pair<int,int> lr);
     
     /**
-     * Col-wise split R into R1 and R2 */
+     * Col-wise split R into R1 and R2 
+     * Helper for buildTree() */
     pair<int,long> colWiseSplit(stats& s, pair<int,int> ul, pair<int,int> lr);
 
     /**
-     * split tree and update the 2 new points: Lower Right of R1, and Upper Left of R2 */
+     * Split tree and update the 2 new points: Lower Right of R1, and Upper Left of R2
+     * Helper for buildTree() */
     void splitTree(stats& s, pair<int,int> ul, pair<int,int> lr,
                    pair<int,int>& newLowerRight_R1, pair<int,int>& newUpperLeft_R2);
 
     /**
-     * render() helper*/
+     * Helper for render() */
     void render(PNG& png, Node* node);
 
-    pair<int, int> shouldBePruned(Node* baseNode, Node* node, int tol);
+    /**
+     * Helpers for prune() */
     void pruneANode(Node* node, double pct, int tol);
-   /* =================== end of private PA3 functions ============== */
+    pair<int, int> getPruneConditions(Node* baseNode, Node* node, int tol);
 
-   
+   /* =================== end of private PA3 functions ============== */
 };
 
 #endif
