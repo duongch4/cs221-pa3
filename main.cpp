@@ -37,14 +37,14 @@ int main()
 	twoDtree t4(origIm4);
 	twoDtree tCopy4(t4);
 
-	// // prune the twoDtree
-	// //where at least 100*X% of pixels are within Y of mean
+	// prune the twoDtree
+	//where at least 100*X% of pixels are within Y of mean
 	tCopy1.prune(0.95, 10000); 
 	tCopy2.prune(0.95, 10000); 
 	tCopy3.prune(0.95, 3000); 
 	tCopy4.prune(0.95, 3000); 
 	
-	// // render the twoDtree
+	// render the twoDtree
 	PNG ppic1 = tCopy1.render();
 	PNG ppic2 = tCopy2.render();
 	PNG ppic3 = tCopy3.render();

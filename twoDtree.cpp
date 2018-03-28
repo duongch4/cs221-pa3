@@ -44,9 +44,11 @@ twoDtree::twoDtree(PNG &imIn)
 {
 	/* your code here */
 	stats imIn_stats(imIn);
+	width = imIn.width();   // width  of PNG represented by tree
+	height = imIn.height(); // height of PNG represented by tree
 
 	pair<int, int> imIn_upperLeft(0, 0);
-	pair<int, int> imIn_lowerRight(imIn.width() - 1, imIn.height() - 1);
+	pair<int, int> imIn_lowerRight(width - 1, height - 1);
 
 	root = buildTree(imIn_stats, imIn_upperLeft, imIn_lowerRight);
 }
@@ -133,7 +135,7 @@ pair<int, long> twoDtree::rowWiseSplit(stats &s, pair<int, int> ul, pair<int, in
 	long minRowWiseScore = s.getScore(ul, make_pair(lr.first, ul.second)) + s.getScore(make_pair(ul.first, ul.second + 1), lr);
 	for (int i = ul.second; i < lr.second; i++)
 	{
-		pair<int, int> newLowerRight_R1(lr.first, i);	 //R1: same ul, new lower right
+		pair<int, int> newLowerRight_R1(lr.first, i);	//R1: same ul, new lower right
 		pair<int, int> newUpperLeft_R2(ul.first, i + 1); //R2: new upper left, same lr
 		long score_i = s.getScore(ul, newLowerRight_R1) + s.getScore(newUpperLeft_R2, lr);
 
@@ -159,7 +161,7 @@ pair<int, long> twoDtree::colWiseSplit(stats &s, pair<int, int> ul, pair<int, in
 	long minColWiseScore = s.getScore(ul, pair<int, int>(ul.first, lr.second)) + s.getScore(pair<int, int>(ul.first + 1, ul.second), lr);
 	for (int i = ul.first; i < lr.first; i++)
 	{
-		pair<int, int> newLowerRight_R1(i, lr.second);	  //R1: same ul, new lower right
+		pair<int, int> newLowerRight_R1(i, lr.second);	//R1: same ul, new lower right
 		pair<int, int> newUpperLeft_R2(i + 1, ul.second); //R2: new upper left, same lr
 		long score_i = s.getScore(ul, newLowerRight_R1) + s.getScore(newUpperLeft_R2, lr);
 
