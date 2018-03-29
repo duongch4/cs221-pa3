@@ -185,27 +185,27 @@ private:
     /**
      * Row-wise split R into R1 and R2
      * Helper for buildTree() */
-    pair<int,long> rowWiseSplit(stats& s, pair<int,int> ul, pair<int,int> lr);
+    pair<int,long> rowWiseSplit(stats & s, pair<int,int> & ul, pair<int,int> & lr);
     
     /**
      * Col-wise split R into R1 and R2 
      * Helper for buildTree() */
-    pair<int,long> colWiseSplit(stats& s, pair<int,int> ul, pair<int,int> lr);
+    pair<int,long> colWiseSplit(stats & s, pair<int,int> & ul, pair<int,int> & lr);
 
     /**
      * Split tree and update the 2 new points: Lower Right of R1, and Upper Left of R2
      * Helper for buildTree() */
-    void splitTree(stats& s, pair<int,int> ul, pair<int,int> lr,
-                   pair<int,int>& newLowerRight_R1, pair<int,int>& newUpperLeft_R2);
+    void splitTree(stats & s, pair<int,int> & ul, pair<int,int> & lr,
+                   pair<int,int> & newLowerRight_R1, pair<int,int> & newUpperLeft_R2);
 
     /**
      * Helper for render() */
-    void render(PNG& png, Node* node);
+    void render(PNG & png, Node* node);
 
     /**
      * Helpers for prune() */
-    void pruneANode(Node* node, double pct, int tol);
-    pair<int, int> getPruneConditions(Node* baseNode, Node* node, int tol);
+    void pruneANode(Node* node, double & pct, int & tol);
+    pair<int, int> getPruneConditions(Node* baseNode, Node* node, int & tol);
 
    /* =================== end of private PA3 functions ============== */
 };

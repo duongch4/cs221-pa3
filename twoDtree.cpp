@@ -39,8 +39,10 @@ twoDtree &twoDtree::operator=(const twoDtree &rhs)
 	return *this;
 }
 
+/*===============================================================================*/
+
 /** Constructor to build tree */
-twoDtree::twoDtree(PNG &imIn)
+twoDtree::twoDtree(PNG & imIn)
 {
 	/* your code here */
 	stats imIn_stats(imIn);
@@ -55,7 +57,7 @@ twoDtree::twoDtree(PNG &imIn)
 
 /**
  * Build a tree */
-twoDtree::Node *twoDtree::buildTree(stats &s, pair<int, int> ul, pair<int, int> lr)
+twoDtree::Node *twoDtree::buildTree(stats & s, pair<int, int> ul, pair<int, int> lr)
 {
 	/* your code here */
 	Node *node = new Node(ul, lr, s.getAvg(ul, lr));
@@ -81,8 +83,8 @@ twoDtree::Node *twoDtree::buildTree(stats &s, pair<int, int> ul, pair<int, int> 
 
 /**
  * split and update the 2 new points: Upper Left of R2, Lower Right of R1 */
-void twoDtree::splitTree(stats &s, pair<int, int> ul, pair<int, int> lr,
-						 pair<int, int> &newLowerRight_R1, pair<int, int> &newUpperLeft_R2)
+void twoDtree::splitTree(stats & s, pair<int, int> & ul, pair<int, int> & lr,
+						 pair<int, int> & newLowerRight_R1, pair<int, int> & newUpperLeft_R2)
 {
 	// Row-wise split
 	pair<int, long> returnFromRowWiseSplit = rowWiseSplit(s, ul, lr);
@@ -125,7 +127,7 @@ void twoDtree::splitTree(stats &s, pair<int, int> ul, pair<int, int> lr,
 
 /**
  * Row-wise split R into R1 and R2  */
-pair<int, long> twoDtree::rowWiseSplit(stats &s, pair<int, int> ul, pair<int, int> lr)
+pair<int, long> twoDtree::rowWiseSplit(stats & s, pair<int, int> & ul, pair<int, int> & lr)
 {
 
 	if (ul.second == lr.second)
@@ -151,7 +153,7 @@ pair<int, long> twoDtree::rowWiseSplit(stats &s, pair<int, int> ul, pair<int, in
 
 /**
  * Col-wise split R into R1 and R2 */
-pair<int, long> twoDtree::colWiseSplit(stats &s, pair<int, int> ul, pair<int, int> lr)
+pair<int, long> twoDtree::colWiseSplit(stats & s, pair<int, int> & ul, pair<int, int> & lr)
 {
 
 	if (ul.first == lr.first)
@@ -175,6 +177,8 @@ pair<int, long> twoDtree::colWiseSplit(stats &s, pair<int, int> ul, pair<int, in
 	return pair<int, long>(minColWise, minColWiseScore);
 }
 
+/*===============================================================================*/
+
 /**
  * Clear a tree */
 void twoDtree::clear()
@@ -188,7 +192,7 @@ void twoDtree::clear()
 
 /**
  * Helper for clear() */
-void twoDtree::clear(Node *node)
+void twoDtree::clear(Node* node)
 {
 	if (node == NULL)
 		return;
@@ -200,9 +204,11 @@ void twoDtree::clear(Node *node)
 	}
 }
 
+/*===============================================================================*/
+
 /**
  * Copy a tree */
-void twoDtree::copy(const twoDtree &other)
+void twoDtree::copy(const twoDtree & other)
 {
 	/* your code here */
 	root = copy(other.root);
@@ -212,7 +218,7 @@ void twoDtree::copy(const twoDtree &other)
 
 /**
  * Helper for copy(const twoDtree & other) */
-twoDtree::Node *twoDtree::copy(const Node *otherNode)
+twoDtree::Node *twoDtree::copy(const Node* otherNode)
 {
 	if (otherNode == NULL)
 		return NULL;
@@ -226,6 +232,8 @@ twoDtree::Node *twoDtree::copy(const Node *otherNode)
 	}
 }
 
+/*===============================================================================*/
+
 /**
  * Prune a tree */
 void twoDtree::prune(double pct, int tol)
@@ -235,7 +243,7 @@ void twoDtree::prune(double pct, int tol)
 
 /**
  * Prune a node: a helper */
-void twoDtree::pruneANode(Node *node, double pct, int tol)
+void twoDtree::pruneANode(Node* node, double & pct, int & tol)
 {
 	if (node->left == NULL && node->right == NULL)
 	{
@@ -264,7 +272,7 @@ void twoDtree::pruneANode(Node *node, double pct, int tol)
 /**
  * Get the prunning conditions: a pair of numbers
  * First is 'count BelowTolerance' : Second is 'total number of Leaves so far' */
-pair<int, int> twoDtree::getPruneConditions(Node *baseNode, Node *node, int tol)
+pair<int, int> twoDtree::getPruneConditions(Node* baseNode, Node* node, int & tol)
 {
 	if (node->left == NULL && node->right == NULL) //reaching a leaf
 	{
@@ -290,6 +298,8 @@ pair<int, int> twoDtree::getPruneConditions(Node *baseNode, Node *node, int tol)
 	return pair<int, int>(totalBelowTolerance, totalLeafNodes);
 }
 
+/*===============================================================================*/
+
 /**
  * Render a tree */
 PNG twoDtree::render()
@@ -302,7 +312,7 @@ PNG twoDtree::render()
 
 /** 
  * Helper for render() */
-void twoDtree::render(PNG &png, Node *node)
+void twoDtree::render(PNG & png, Node* node)
 {
 	if (node->left == NULL && node->right == NULL)
 	{
@@ -321,3 +331,5 @@ void twoDtree::render(PNG &png, Node *node)
 	render(png, node->left);
 	render(png, node->right);
 }
+
+/*===============================================================================*/

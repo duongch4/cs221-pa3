@@ -40,25 +40,25 @@ private:
 	/**
 	 * Get the upperLeft, lowerLeft, and upperRight components of a SAT
 	 * Used in getSum and getSumSq */
-	long upperLeftComponent(vector< vector<long> >& vec, pair<int,int> ul);
-	long lowerLeftComponent(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr);
-	long upperRightComponent(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr);
+	long upperLeftComponent(vector< vector<long> > & vec, pair<int,int> & ul);
+	long lowerLeftComponent(vector< vector<long> > & vec, pair<int,int> & ul, pair<int,int> & lr);
+	long upperRightComponent(vector< vector<long> > & vec, pair<int,int> & ul, pair<int,int> & lr);
 
 	/**
-	 * getSum helper */ 
-	long getSum(vector< vector<long> >& vec, pair<int,int> ul, pair<int,int> lr);
+	 * getSum and getSumSq helper */ 
+	long getSum(vector< vector<long> > & vec, pair<int,int> & ul, pair<int,int> & lr);
 	
 	/**
 	 * getScore helper: score for individual channel */
-	long getScore(char channel, pair<int,int> ul, pair<int,int> lr);
+	long getScore(char channel, pair<int,int> & ul, pair<int,int> & lr);
 
 	/**
 	 * Initialise the 'sum' and 'sumsq' vectors for one channel */
-	void initChannel(PNG & im, char channel, vector< vector<long> >& vec, vector< vector<long> >& vecSq);
+	void initChannel(PNG & im, char channel, vector< vector<long> > & vec, vector< vector<long> > & vecSq);
 	
 	/**
 	 * Get the value for a channel from a pixel */
-	long chooseChannel(char channel, RGBAPixel*& pixel);
+	long chooseChannel(char channel, RGBAPixel* & pixel);
 
 public:
 
