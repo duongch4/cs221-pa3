@@ -1,1 +1,1 @@
-# cs221-pa3
+# Lossy Image Compression
