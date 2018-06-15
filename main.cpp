@@ -26,6 +26,8 @@ int main()
 	origIm3.readFromFile("images/remb.png");
 	PNG origIm4;
 	origIm4.readFromFile("images/rosa.png");
+	PNG origIm5;
+	origIm5.readFromFile("images/stars.png");
 
 	// use it to build a twoDtree
 	twoDtree t1(origIm1);
@@ -36,24 +38,29 @@ int main()
 	twoDtree tCopy3(t3);
 	twoDtree t4(origIm4);
 	twoDtree tCopy4(t4);
+	twoDtree t5(origIm5);
+	twoDtree tCopy5(t5);
 
 	// prune the twoDtree
 	//where at least 100*X% of pixels are within Y of mean
 	tCopy1.prune(0.95, 10000); 
 	tCopy2.prune(0.95, 10000); 
 	tCopy3.prune(0.95, 3000); 
-	tCopy4.prune(0.95, 3000); 
+	tCopy4.prune(0.95, 3000);
+	tCopy5.prune(0.90, 5000); 
 	
 	// render the twoDtree
 	PNG ppic1 = tCopy1.render();
 	PNG ppic2 = tCopy2.render();
 	PNG ppic3 = tCopy3.render();
 	PNG ppic4 = tCopy4.render();
+	PNG ppic5 = tCopy5.render();
 
 	ppic1.writeToFile("images/prunedstanleytotem.png");
 	ppic2.writeToFile("images/prunedubctotem.png");
 	ppic3.writeToFile("images/prunedremb.png");
 	ppic4.writeToFile("images/prunedrosa.png");
+	ppic5.writeToFile("images/prunedstars.png");
 
   return 0;
 }

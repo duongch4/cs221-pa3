@@ -320,11 +320,30 @@ void twoDtree::render(PNG & png, Node* node)
 		{
 			for (int j = node->upLeft.first; j <= node->lowRight.first; j++)
 			{
+				// Border: top
+				png.getPixel(j, node->upLeft.second)->r = 0;
+				png.getPixel(j, node->upLeft.second)->g = 0;
+				png.getPixel(j, node->upLeft.second)->b = 0;
+				// Border: bottom
+				png.getPixel(j, node->lowRight.second)->r = 0;
+				png.getPixel(j, node->lowRight.second)->g = 0;
+				png.getPixel(j, node->lowRight.second)->b = 0;
+				// Border: left
+				png.getPixel(node->upLeft.first, i)->r = 0;
+				png.getPixel(node->upLeft.first, i)->g = 0;
+				png.getPixel(node->upLeft.first, i)->b = 0;
+				// Border: right
+				png.getPixel(node->lowRight.first, i)->r = 0;
+				png.getPixel(node->lowRight.first, i)->g = 0;
+				png.getPixel(node->lowRight.first, i)->b = 0;
+
+				// Main change
 				png.getPixel(j, i)->r = node->avg.r;
 				png.getPixel(j, i)->g = node->avg.g;
 				png.getPixel(j, i)->b = node->avg.b;
 			}
 		}
+
 		return;
 	}
 
